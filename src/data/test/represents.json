@@ -1,0 +1,23 @@
+[
+    {
+      "id": 1,
+      "id_user": 1,
+      "labor": "Abogado",
+      "civil_state": "Casado",
+      "ids_student": [101, 102]
+    },
+    {
+      "id": 2,
+      "id_user": 2,
+      "labor": "Ingeniero",
+      "civil_state": "Soltero",
+      "ids_student": [103]
+    },
+    {
+      "id": 3,
+      "id_user": 3,
+      "labor": "Médico",
+      "civil_state": "Viudo",
+      "ids_student": [104, 105, 106]
+    }
+  ]

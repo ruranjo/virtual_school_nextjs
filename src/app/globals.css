@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Aplica estilos globales */
+html, body, #__next {
+  @apply h-full bg-primary;
+}
+
+/* Habilitar desplazamiento suave */
+html {
+  scroll-behavior: smooth;
+}

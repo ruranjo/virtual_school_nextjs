@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Rol {
+  id          Int       @id @default(autoincrement())
+  nombre      String    @unique
+  descripcion String?
+  usuarios    Usuario[]
+}
+
+model Usuario {
+  id            Int            @id @default(autoincrement())
+  cedula        String         @unique
+  firstName     String         @map("firstName")
+  lastName      String         @map("lastName")
+  telefono      String
+  correo        String         @unique
+  rolId         Int
+  birthdate     DateTime       @map("birthdate")
+  gender        String?
+  address       String
+  password      String
+  estudiante    Estudiante?
+  profesor      Profesor?
+  representante Representante?
+  rol           Rol            @relation(fields: [rolId], references: [id])
+}
+
+model Profesor {
+  id        Int     @id @default(autoincrement())
+  usuarioId Int     @unique
+  codigo    String  @unique
+  grado     String
+  area      String
+  aulas     Aula[]
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
+  notas     Nota[]
+}
+
+model Representante {
+  id          Int          @id @default(autoincrement())
+  usuarioId   Int          @unique
+  direccion   String
+  ocupacion   String
+  estadoCivil String
+  edad        Int
+  estudiantes Estudiante[]
+  usuario     Usuario      @relation(fields: [usuarioId], references: [id])
+}
+
+model Estudiante {
+  id              Int           @id @default(autoincrement())
+  usuarioId       Int           @unique
+  representanteId Int
+  aulas           Aula[]        @relation("EstudianteToAula")
+  representante   Representante @relation(fields: [representanteId], references: [id])
+  usuario         Usuario       @relation(fields: [usuarioId], references: [id])
+  notas           Nota[]
+}
+
+
+model Actividad {
+  id          Int      @id @default(autoincrement())
+  name        String
+  fechaInicio DateTime
+  fechaFinal  DateTime
+  comentario  String?
+  entregado   Boolean
+  aulaId      Int
+  aula        Aula     @relation(fields: [aulaId], references: [id], name: "AulaToActividad")
+  notas       Nota[]   @relation("ActividadToNota")
+}
+
+model Aula {
+  id           Int         @id @default(autoincrement())
+  profesorId   Int
+  nombre       String
+  estudiantes  Estudiante[] @relation("EstudianteToAula")
+  actividades  Actividad[]  @relation("AulaToActividad")
+  profesor     Profesor     @relation(fields: [profesorId], references: [id])
+}
+
+model Nota {
+  id             Int        @id @default(autoincrement())
+  actividadId    Int
+  profesorId     Int
+  estudianteId   Int
+  ponderacion    Float
+  actividad      Actividad  @relation(fields: [actividadId], references: [id], name: "ActividadToNota")
+  profesor       Profesor   @relation(fields: [profesorId], references: [id])
+  estudiante     Estudiante @relation(fields: [estudianteId], references: [id])
+}
