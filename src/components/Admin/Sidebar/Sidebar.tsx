@@ -170,7 +170,7 @@ const Sidebar: React.FC<Props> = ({ isAdmin }) => {
           className="rounded-full"
         />
         <div className="flex flex-col mt-2 md:mt-0 md:ml-4">
-          <span className="font-bold">E.N. General Mariano Montilla y Díaz</span>
+          <span className="font-bold">SOL EDUCATIVO</span>
           
         </div>
       </div>
